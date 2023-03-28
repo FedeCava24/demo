@@ -15,7 +15,7 @@ import java.awt.*;
 public class MainView extends VerticalLayout {
     public MainView() {
         var button = new Button("Click me!");
-        var textField = new TextField();
+        var textField = new TextField(); //var dove inserire il nome
 
 
 

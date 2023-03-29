@@ -1,8 +1,10 @@
 package com.example.demo;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -10,7 +12,7 @@ import com.vaadin.flow.router.Route;
 
 import java.awt.*;
 
-@Route
+ /*@Route
 
 public class MainView extends VerticalLayout {
     public MainView() {
@@ -29,6 +31,20 @@ public class MainView extends VerticalLayout {
 
 
     }
+*/
 
+ @Route
+ public class MainView extends Div {
+
+     public MainView(){
+         // demo only
+        LoginOverlay loginOverlay= new LoginOverlay();
+        loginOverlay. setTitle("EsseTi");
+        loginOverlay. setError(true);
+        add(loginOverlay);
+        loginOverlay.setOpened(true);
+
+        loginOverlay.getElement().setAttribute("no-autofocus", "");
+     }
 
 }

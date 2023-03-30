@@ -20,7 +20,5 @@ import com.vaadin.flow.router.Route;
             loginForm.getElement().setAttribute("no-autofocus", "");
         }
 
-
-
     }
 

@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -32,6 +33,19 @@ public class RegistrationPage extends VerticalLayout {
         formLayout.setResponsiveSteps(new ResponsiveStep("0", 2));
 
         Button createAccount = new Button("Create account");
+        createAccount.addClickListener(e -> register(
+                firstNameField.getValue(),
+                lastNameField.getValue(),
+                username.getValue(),
+                password.getValue(),
+                confirmPassword.getValue(),
+                incarichi.getValue())
+
+        );
+        createAccount.addClickListener(e -> {
+            createAccount.getUI().ifPresent(ui ->
+                    ui.navigate(""));
+        });
         createAccount.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Button cancel = new Button("Cancel");
 
@@ -40,6 +54,42 @@ public class RegistrationPage extends VerticalLayout {
 
         setPadding(false);
         add(formLayout, buttonLayout);
+    }
+
+
+
+
+    private void register (String  firstname, String lastname ,String username,String password, String confirmPassword,
+                              String incarichi ) {
+        if (username.trim().isEmpty()) {
+
+            Notification.show("Enter a username");
+
+        } else if (password.isEmpty()) {
+
+            Notification.show("Enter a password");
+
+        } else if (!password.equals(confirmPassword)) {
+
+            Notification.show("Passwords don't match");
+
+        }
+        else if (firstname.trim().isEmpty()) {
+
+            Notification.show("Enter a firstname");
+
+        }
+        else if(lastname.trim().isEmpty()) {
+
+            Notification.show("Enter a lastname");
+
+        }
+        else if(incarichi.isEmpty()){
+
+            Notification.show("Select a incarico");
+
+        }
+
     }
 
 }

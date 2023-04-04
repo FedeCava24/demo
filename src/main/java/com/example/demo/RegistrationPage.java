@@ -13,13 +13,22 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.shared.Registration;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.*;
+
 
 import java.time.LocalDate;
 import java.util.Date;
 
 @Route("registration")
 public class RegistrationPage extends VerticalLayout {
-    public RegistrationPage() {
+
+
+    public RegistrationPage() throws SQLException {
         TextField firstNameField = new TextField("First name", "", "");
         TextField lastNameField = new TextField("Last name", "", "");
         TextField username = new TextField("Username");
@@ -27,33 +36,37 @@ public class RegistrationPage extends VerticalLayout {
         DatePicker dateBirth = new DatePicker("Data di nascita");
         PasswordField password = new PasswordField("Password");
         PasswordField confirmPassword = new PasswordField("Confirm password");
-        ComboBox<String> incarichi = new ComboBox<>("Inacarichi");
+        ComboBox<String> task = new ComboBox<>("Inacarichi");
 
-        incarichi.setAllowCustomValue(true);
+        task.setAllowCustomValue(true);
         //Aggiungere i vari tipi di incarichi
-        incarichi.setItems("PR", "Barista", "Cambusiere", "gestore");
-        incarichi.setHelperText("Seleziona o scrivi l'incarico svolto");
+        task.setItems("PR", "Barista", "Cambusiere", "gestore");
+        task.setHelperText("Seleziona o scrivi l'incarico svolto");
 
         FormLayout formLayout = new FormLayout(firstNameField, lastNameField, username, emailField, dateBirth,
-                password, confirmPassword, incarichi);
+                password, confirmPassword, task);
         formLayout.setResponsiveSteps(new ResponsiveStep("0", 2));
 
         Button createAccount = new Button("Create account");
-        createAccount.addClickListener(e -> register(
+        createAccount.addClickListener(e -> User(
                 firstNameField.getValue(),
                 lastNameField.getValue(),
                 username.getValue(),
+                emailField.getValue(),
+                String.valueOf(dateBirth.getValue()),
                 password.getValue(),
                 confirmPassword.getValue(),
-                incarichi.getValue(),
-                emailField.getValue(),
-                String.valueOf(dateBirth.getValue()))
-
+                task.getValue())
         );
-        createAccount.addClickListener(e -> {
-            createAccount.getUI().ifPresent(ui ->
-                    ui.navigate(""));
-        });
+
+        createAccount.addClickListener(e-> new Userimporter());
+
+
+
+
+
+        createAccount.addClickListener(e -> createAccount.getUI().ifPresent(ui ->
+                ui.navigate("")));
         createAccount.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Button cancel = new Button("Cancel");
 
@@ -67,8 +80,8 @@ public class RegistrationPage extends VerticalLayout {
 
 
 
-    private void register (String  firstname, String lastname , String username, String email, String dateBirth, String password, String confirmPassword,
-                           String incarichi ) {
+    public void User (String  firstname, String lastname , String username, String email, String dateBirth, String password, String confirmPassword,
+                           String task ) {
         if (username.trim().isEmpty()) {
 
             Notification.show("Enter a username");
@@ -92,7 +105,7 @@ public class RegistrationPage extends VerticalLayout {
             Notification.show("Enter a lastname");
 
         }
-        else if(incarichi.isEmpty()){
+        else if(task.isEmpty()){
 
             Notification.show("Select a incarico");
 
@@ -104,6 +117,19 @@ public class RegistrationPage extends VerticalLayout {
             Notification.show("Enter the Birthday's date");
         }
 
+    }
+    public class Userimporter{
+        public static void main(String[] args) throws IOException, SQLException{
+            String jdbcURL = "jdbc:mysql://localhost:3306/mysql";
+            String username = "Luca";
+            String password = "!AcUl!eubagil!25";
+
+            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+
+
+            String sql;
+            sql = "INSERT INTO personale(firstname,lastname,username,email,dateBirth,password,confirmPassword,task)";
+        }
     }
 
 }

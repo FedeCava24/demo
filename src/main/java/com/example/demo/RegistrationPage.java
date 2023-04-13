@@ -28,7 +28,7 @@ import java.util.Date;
 public class RegistrationPage extends VerticalLayout {
 
 
-    public RegistrationPage() throws SQLException {
+    public RegistrationPage()  {
         TextField firstNameField = new TextField("First name", "", "");
         TextField lastNameField = new TextField("Last name", "", "");
         TextField username = new TextField("Username");

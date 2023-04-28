@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
@@ -15,6 +15,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.component.button.Button;
 
 
 
@@ -29,38 +30,51 @@ public class HomePage extends AppLayout {
                 .set("margin","0");
 
         Tabs views = getPrimaryNavigations();
+
         DrawerToggle toggle = new DrawerToggle();
-        H2 viewTitle = new H2("Orders");
+        H2 viewTitle = new H2("Dashboard");
         viewTitle.getStyle().set("font-size","var(--lumo-font-size-l)")
                 .set("margin","0");
-        Tabs subViews = getSecondaryNavigations();
+
         HorizontalLayout wrapper = new HorizontalLayout(toggle,viewTitle);
         wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
         wrapper.setSpacing(false);
 
-        VerticalLayout viewHeader=new VerticalLayout(wrapper, subViews);
+        VerticalLayout viewHeader=new VerticalLayout(wrapper, viewTitle);
         viewHeader.setPadding(false);
         viewHeader.setSpacing(false);
 
         addToDrawer(title,views);
-        addToNavbar(viewHeader);
-        setPrimarySection(Section.DRAWER);}
+        addToNavbar(toggle,viewHeader);
+        setPrimarySection(Section.DRAWER);
+
+
+
+    }
 
     private Tabs getPrimaryNavigations() {
+        Button dashboardButton = new Button("Dashboard");
+        Button ordersButton = new Button("Orders");
+        Button productButton = new Button("Product");
+        Button employeeButton = new Button("Employees");
+        Button availabilityButton = new Button("Availability");
+        Button reservationButton = new Button("Reservations");
         Tabs tabs = new Tabs();
-        tabs.add(createTab(VaadinIcon.DASHBOARD, "Dashboard"),
-                createTab(VaadinIcon.CART, "Orders"),
-                createTab(VaadinIcon.PACKAGE, "Products"),
-                createTab(VaadinIcon.USER_CHECK, "Employees"),
-                createTab(VaadinIcon.CALENDAR_USER, "Availability"),
-                createTab(VaadinIcon.TABLE,"Reservations"));
+        tabs.add(createTab(VaadinIcon.DASHBOARD, dashboardButton),
+                createTab(VaadinIcon.CART,ordersButton ),
+                createTab(VaadinIcon.PACKAGE, productButton),
+                createTab(VaadinIcon.USER_CHECK, employeeButton),
+                createTab(VaadinIcon.CALENDAR_USER, availabilityButton),
+                createTab(VaadinIcon.TABLE,reservationButton));
+
+
 
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         tabs.setSelectedIndex(1);
         return tabs;
     }
 
-    private Tab createTab(VaadinIcon viewIcon, String viewName){
+    private Tab createTab(VaadinIcon viewIcon, Button viewName){
         Icon icon =viewIcon.create();
         icon.getStyle().set("box-sizing","border-box")
                 .set("margin-inline-edn","var(--lumo-space-m)")
@@ -74,9 +88,7 @@ public class HomePage extends AppLayout {
         return new Tab(link);
     }
 
-    private Tabs getSecondaryNavigations(){
-        Tabs tabs = new Tabs();
-        tabs.add(new Tab("All"), new Tab("open"),new Tab("Completed"));
-        return tabs;
-    }
+
+
+
 }

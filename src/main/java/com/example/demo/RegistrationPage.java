@@ -124,11 +124,12 @@ public class RegistrationPage extends VerticalLayout {
             String username = "Luca";
             String password = "!AcUl!eubagil!25";
 
-            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+            try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
+            }
 
 
             String sql;
-            sql = "INSERT INTO personale(firstname,lastname,username,email,dateBirth,password,confirmPassword,task)";
+            sql = "INSERT INTO personale(password,username,dateBirth,email,firstname,task,lastname)";
         }
     }
 

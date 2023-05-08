@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
@@ -13,16 +12,16 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.component.button.Button;
 
 
 
-@Route("Home")
-public class HomePage extends AppLayout {
+@Route("Dashboard")
+public class DashboardPage extends AppLayout {
 
-    public HomePage(){
+    public DashboardPage(){
 
 
         H1 title = new H1("Esseti's App");
@@ -55,7 +54,7 @@ public class HomePage extends AppLayout {
     private Tabs getPrimaryNavigations() {
         Button dashboardButton = new Button("Dashboard");
         Button ordersButton = new Button("Orders");
-        Button productButton = new Button("Product");
+        Button productButton = new Button("Products");
         Button employeeButton = new Button("Employees");
         Button availabilityButton = new Button("Availability");
         Button reservationButton = new Button("Reservations");
@@ -66,6 +65,32 @@ public class HomePage extends AppLayout {
                 createTab(VaadinIcon.USER_CHECK, employeeButton),
                 createTab(VaadinIcon.CALENDAR_USER, availabilityButton),
                 createTab(VaadinIcon.TABLE,reservationButton));
+
+        ordersButton.addClickListener(e -> {
+            ordersButton.getUI().ifPresent(ui ->
+                    ui.navigate("Orders"));
+
+        });
+        productButton.addClickListener(e -> {
+            productButton.getUI().ifPresent(ui ->
+                    ui.navigate("Products"));
+
+        });
+        employeeButton.addClickListener(e -> {
+            employeeButton.getUI().ifPresent(ui ->
+                    ui.navigate("Employees"));
+
+        });
+        availabilityButton.addClickListener(e -> {
+            availabilityButton.getUI().ifPresent(ui ->
+                    ui.navigate("Availability"));
+
+        });
+        reservationButton.addClickListener(e -> {
+            reservationButton.getUI().ifPresent(ui ->
+                    ui.navigate("Reservations"));
+
+        });
 
 
 

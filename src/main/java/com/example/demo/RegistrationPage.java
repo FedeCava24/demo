@@ -40,7 +40,7 @@ public class RegistrationPage extends VerticalLayout {
 
         task.setAllowCustomValue(true);
         //Aggiungere i vari tipi di incarichi
-        task.setItems("PR", "Barista", "Cambusiere", "gestore");
+        task.setItems("PR", "Barista", "Cambusiere", "gestore","Sicurezza","Cassiera");
         task.setHelperText("Seleziona o scrivi l'incarico svolto");
 
         FormLayout formLayout = new FormLayout(firstNameField, lastNameField, username, emailField, dateBirth,

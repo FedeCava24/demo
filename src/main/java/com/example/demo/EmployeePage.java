@@ -113,7 +113,7 @@ public class EmployeePage extends AppLayout {
 
     private Tabs getSecondaryNavigation(){
         Tabs tabs =new Tabs();
-        tabs.add(new Tab("Cambusieri"),new Tab("Baristi"));
+        tabs.add(new Tab("Cambusieri"),new Tab("Baristi", new Tab("Sicurezza"),new Tab("Cassieri")));
         return tabs;
     }
 

@@ -34,17 +34,17 @@ public class EmployeePage extends AppLayout {
         H2 viewTitle = new H2("Employees");
         viewTitle.getStyle().set("font-size","var(--lumo-font-size-l)")
                 .set("margin","0");
-
+        Tabs subViews=getSecondaryNavigation();
         HorizontalLayout wrapper = new HorizontalLayout(toggle,viewTitle);
         wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
         wrapper.setSpacing(false);
 
-        VerticalLayout viewHeader=new VerticalLayout(wrapper, viewTitle);
+        VerticalLayout viewHeader=new VerticalLayout(wrapper, subViews);
         viewHeader.setPadding(false);
         viewHeader.setSpacing(false);
 
         addToDrawer(title,views);
-        addToNavbar(toggle,viewHeader);
+        addToNavbar(viewHeader);
         setPrimarySection(Section.DRAWER);
 
 
@@ -65,6 +65,9 @@ public class EmployeePage extends AppLayout {
                 createTab(VaadinIcon.USER_CHECK, employeeButton),
                 createTab(VaadinIcon.CALENDAR_USER, availabilityButton),
                 createTab(VaadinIcon.TABLE,reservationButton));
+
+        tabs.setOrientation(Tabs.Orientation.VERTICAL);
+        tabs.setSelectedIndex(1);
 
         ordersButton.addClickListener(e -> {
             ordersButton.getUI().ifPresent(ui ->
@@ -91,11 +94,6 @@ public class EmployeePage extends AppLayout {
                     ui.navigate("Reservations"));
 
         });
-
-
-
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.setSelectedIndex(1);
         return tabs;
     }
 
@@ -113,7 +111,11 @@ public class EmployeePage extends AppLayout {
         return new Tab(link);
     }
 
-
+    private Tabs getSecondaryNavigation(){
+        Tabs tabs =new Tabs();
+        tabs.add(new Tab("Cambusieri"),new Tab("Baristi"));
+        return tabs;
+    }
 
 
 }

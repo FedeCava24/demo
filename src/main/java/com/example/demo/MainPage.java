@@ -28,7 +28,7 @@ public class MainPage extends Div {
 
         enterButton.addClickListener(e -> {
                     enterButton.getUI().ifPresent(ui ->
-                            ui.navigate("Home"));
+                            ui.navigate("Dashboard"));
         });
 
         HorizontalLayout horizontalLayout = new HorizontalLayout(loginButton, registrationButton, enterButton);

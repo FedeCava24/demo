@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
@@ -15,6 +16,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
@@ -121,16 +123,19 @@ public class ProductPage extends AppLayout {
 
         int BottlevodkaNumber=0;
         int BottleBelvedereNumber=0;
-        tabs.add("Cambusa", new Div(BottleTable("vodka",BottlevodkaNumber,addVodkaButton,subVodkaButton),
-                BottleTable("Belvedere",BottleBelvedereNumber,addBelvedereButton,subBelvedereButton)));
-        tabs.add("Bar Premium", new Div(BottleTable("vodka",BottlevodkaNumber,addVodkaButton,subVodkaButton),
-                BottleTable("Belvedere",BottleBelvedereNumber,addBelvedereButton,subBelvedereButton)));
+        /*tabs.add("Cambusa", new Div(BottleTable("vodka ",BottlevodkaNumber,addVodkaButton,subVodkaButton),
+                BottleTable("Belvedere ",BottleBelvedereNumber,addBelvedereButton,subBelvedereButton)));
+        tabs.add("Bar Premium", new Div(BottleTable("vodka ",BottlevodkaNumber,addVodkaButton,subVodkaButton),
+                BottleTable("Belvedere ",BottleBelvedereNumber,addBelvedereButton,subBelvedereButton)));*/
+        tabs.add("Cambusa", new NumberFieldStepButtons());
+        tabs.add("Bar Premium", new NumberFieldStepButtons());
+
 
 
         return tabs;
     }
 
-    private Tab BottleTable(String Name, int Number , Button Add, Button Sub){
+    /*private Tab BottleTable(String Name, int Number , Button Add, Button Sub){
         RouterLink link = new RouterLink();
         link.add(Name);
         link.add(String.valueOf(Number));
@@ -140,7 +145,24 @@ public class ProductPage extends AppLayout {
 
         return new Tab(link);
 
-    }
+    }*/
+    public class NumberFieldStepButtons extends FormLayout {
+        public NumberFieldStepButtons() {
+            setResponsiveSteps(new ResponsiveStep("0", 1, ResponsiveStep.LabelsPosition.ASIDE));
+            IntegerField vodkaField = new IntegerField();
+            vodkaField.setValue(0);
+            vodkaField.setStepButtonsVisible(true);
+            vodkaField.setMin(0);
+            vodkaField.setMax(999);
+            addFormItem(vodkaField, "Vodka");
 
+            IntegerField belvedereField = new IntegerField();
+            belvedereField.setValue(0);
+            belvedereField.setStepButtonsVisible(true);
+            belvedereField.setMin(0);
+            belvedereField.setMax(999);
+            addFormItem(belvedereField, "Belvedere");
+        }
+    }
 
 }

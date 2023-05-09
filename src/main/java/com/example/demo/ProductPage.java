@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
@@ -11,6 +12,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;
@@ -34,7 +36,7 @@ public class ProductPage extends AppLayout {
         H2 viewTitle = new H2("Products");
         viewTitle.getStyle().set("font-size","var(--lumo-font-size-l)")
                 .set("margin","0");
-        Tabs subViews =getSecondaryNavigation();
+        TabSheet subViews =getSecondaryNavigation();
         HorizontalLayout wrapper = new HorizontalLayout(toggle,viewTitle);
         wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
         wrapper.setSpacing(false);
@@ -110,12 +112,35 @@ public class ProductPage extends AppLayout {
 
         return new Tab(link);
     }
-    private Tabs getSecondaryNavigation(){
-        Tabs tabs =new Tabs();
-        tabs.add(new Tab("Cambusa"),new Tab("Bar Premium"),new Tab("Bar chiosco"));
+    private TabSheet getSecondaryNavigation(){
+        TabSheet tabs =new TabSheet();
+        Button addVodkaButton=new Button("+");
+        Button subVodkaButton=new Button("-");
+        Button addBelvedereButton=new Button("+");
+        Button subBelvedereButton=new Button("-");
+
+        int BottlevodkaNumber=0;
+        int BottleBelvedereNumber=0;
+        tabs.add("Cambusa", new Div(BottleTable("vodka",BottlevodkaNumber,addVodkaButton,subVodkaButton),
+                BottleTable("Belvedere",BottleBelvedereNumber,addBelvedereButton,subBelvedereButton)));
+        tabs.add("Bar Premium", new Div(BottleTable("vodka",BottlevodkaNumber,addVodkaButton,subVodkaButton),
+                BottleTable("Belvedere",BottleBelvedereNumber,addBelvedereButton,subBelvedereButton)));
+
+
         return tabs;
     }
 
+    private Tab BottleTable(String Name, int Number , Button Add, Button Sub){
+        RouterLink link = new RouterLink();
+        link.add(Name);
+        link.add(String.valueOf(Number));
+        link.add(Add);
+        link.add(Sub);
+        link.setTabIndex(-1);
+
+        return new Tab(link);
+
+    }
 
 
 }

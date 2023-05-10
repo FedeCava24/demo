@@ -11,16 +11,23 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 
 @Route("Reservations")
 public class ReservationPage extends AppLayout {
 
+    BufferedImage maps=null;
     public ReservationPage(){
 
 
@@ -34,7 +41,7 @@ public class ReservationPage extends AppLayout {
         H2 viewTitle = new H2("Reservations");
         viewTitle.getStyle().set("font-size","var(--lumo-font-size-l)")
                 .set("margin","0");
-        Tabs subViews = getSecondaryNavigation();
+        TabSheet subViews = getSecondaryNavigation();
         HorizontalLayout wrapper = new HorizontalLayout(toggle,viewTitle);
         wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
         wrapper.setSpacing(false);
@@ -111,11 +118,28 @@ public class ReservationPage extends AppLayout {
         return new Tab(link);
     }
 
-    private Tabs getSecondaryNavigation(){
-        Tabs tabs =new Tabs();
-        tabs.add(new Tab("Table's Map"),new Tab("Wednesday"),new Tab("Friday"), new Tab("Saturday"));
+    private TabSheet getSecondaryNavigation(){
+        TabSheet tabs =new TabSheet();
+
+        tabs.add("Table's Map", new CaricatoreImmagini());
+
+
         return tabs;
     }
+  /*  public class CaricatoreImmagini extends AppLayout {
+        BufferedImage image;
+        public BufferedImage caricaImmagine(){
+
+            try {
+                image= ImageIO.read(getClass().getResource("/piantina.png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
 
+            image.setRGB(600,600,600);
+            return image;
+        }
+    }
+*/
 }

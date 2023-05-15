@@ -11,6 +11,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabSheet;
@@ -127,8 +128,9 @@ public class ProductPage extends AppLayout {
         return tabs;
     }
 
-    public class NumberFieldStepButtons extends FormLayout {
+    public class NumberFieldStepButtons extends FormLayout  {
         public NumberFieldStepButtons(int i) {
+            Scroller scroller=new Scroller();
             setResponsiveSteps(new ResponsiveStep("0", 1, ResponsiveStep.LabelsPosition.ASIDE));
             if (i == 2 || i == 3) {
                 IntegerField vodkaField = new IntegerField();
@@ -429,6 +431,7 @@ public class ProductPage extends AppLayout {
                 domMagnumField.setMin(0);
                 domMagnumField.setMax(999);
                 addFormItem(domMagnumField, "Dom Perignon Magnum");
+
             }
         }
     }

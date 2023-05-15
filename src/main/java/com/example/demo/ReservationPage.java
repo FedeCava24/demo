@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -20,7 +22,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.server.StreamResource;
+
 
 
 import java.awt.*;
@@ -126,6 +128,9 @@ public class ReservationPage extends AppLayout {
         TabSheet tabs =new TabSheet();
 
         tabs.add("Table's Map", new CaricatoreImmagine());
+        tabs.add("Wednesday",new InsertTable());
+        tabs.add("Friday",new InsertTable());
+        tabs.add("Saturday",new InsertTable());
 
 
         return tabs;
@@ -143,4 +148,34 @@ public class ReservationPage extends AppLayout {
             add(scroller);
         }
     }
-}
+
+        public class InsertTable extends Div{
+
+            public InsertTable(){
+
+                TextField tableNumber = new TextField("Table Number");
+                TextField tableName =new TextField("Table Name");
+                TextField prName =new TextField("Pr's Name");
+                Button prenotaButton = new Button("Prenota Tavolo");
+                prenotaButton.addClickListener(e -> tableList(
+                        tableNumber.getValue(),
+                        tableName.getValue(),
+                        prName.getValue())
+                );
+
+
+
+                FormLayout formLayout=new FormLayout();
+                formLayout.add(tableNumber, tableName, prName,prenotaButton);
+                formLayout.setResponsiveSteps(
+                        new FormLayout.ResponsiveStep("500px",3));
+                add(formLayout);
+            }
+
+            private void tableList(String tableNumber, String tableName, String prName) {
+
+            }
+
+
+        }
+    }

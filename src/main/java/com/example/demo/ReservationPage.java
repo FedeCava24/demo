@@ -128,6 +128,8 @@ public class ReservationPage extends AppLayout {
         TabSheet tabs =new TabSheet();
 
         tabs.add("Table's Map", new CaricatoreImmagine());
+        tabs.setHeight("800px");
+        tabs.setWidth("1100px");
         tabs.add("Wednesday",new InsertTable());
         tabs.add("Friday",new InsertTable());
         tabs.add("Saturday",new InsertTable());
@@ -140,8 +142,8 @@ public class ReservationPage extends AppLayout {
         public CaricatoreImmagine(){
 
             Scroller scroller = new Scroller() ;
-            scroller.setWidth("1500px");
-            scroller.setHeight("1000px");
+            scroller.setWidth("1100px");
+            scroller.setHeight("600px");
             StreamResource imageResource = new StreamResource("piatina+.png",()->getClass().getResourceAsStream("/piantina.png"));
             Image img = new Image(imageResource,"Piantina tavoli");
             scroller.setContent(img);

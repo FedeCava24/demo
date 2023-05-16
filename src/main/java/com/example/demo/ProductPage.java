@@ -24,7 +24,7 @@ import com.vaadin.flow.router.RouterLink;
 
 
 @Route("Products")
-public class ProductPage extends AppLayout {
+public class ProductPage extends AppLayout{
 
     public ProductPage(){
 
@@ -124,13 +124,15 @@ public class ProductPage extends AppLayout {
         tabs.add("Bar Premium", new NumberFieldStepButtons(i));
         i=3;
         tabs.add("Bar Chiosco", new NumberFieldStepButtons(i));
+        tabs.setHeight("720px");
+        tabs.setWidth("1180px");
 
         return tabs;
     }
 
     public class NumberFieldStepButtons extends FormLayout  {
         public NumberFieldStepButtons(int i) {
-            Scroller scroller=new Scroller();
+
             setResponsiveSteps(new ResponsiveStep("0", 1, ResponsiveStep.LabelsPosition.ASIDE));
             if (i == 2 || i == 3) {
                 IntegerField vodkaField = new IntegerField();

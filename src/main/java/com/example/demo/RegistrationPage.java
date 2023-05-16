@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -48,7 +49,24 @@ public class RegistrationPage extends VerticalLayout {
         formLayout.setResponsiveSteps(new ResponsiveStep("0", 2));
 
         Button createAccount = new Button("Create account");
-        createAccount.addClickListener(e -> User(
+        createAccount.addClickListener(e -> {
+                    try {
+                        User(
+                                firstNameField.getValue(),
+                                lastNameField.getValue(),
+                                username.getValue(),
+                                emailField.getValue(),
+                                String.valueOf(dateBirth.getValue()),
+                                password.getValue(),
+                                confirmPassword.getValue(),
+                                task.getValue());
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+        );
+
+        /*createAccount.addClickListener(e -> User(
                 firstNameField.getValue(),
                 lastNameField.getValue(),
                 username.getValue(),
@@ -57,9 +75,8 @@ public class RegistrationPage extends VerticalLayout {
                 password.getValue(),
                 confirmPassword.getValue(),
                 task.getValue())
-        );
+        );*/
 
-        createAccount.addClickListener(e-> new Userimporter());
 
 
 
@@ -81,7 +98,7 @@ public class RegistrationPage extends VerticalLayout {
 
 
     public void User (String  firstname, String lastname , String username, String email, String dateBirth, String password, String confirmPassword,
-                           String task ) {
+                           String task ) throws SQLException{
         if (username.trim().isEmpty()) {
 
             Notification.show("Enter a username");
@@ -117,20 +134,21 @@ public class RegistrationPage extends VerticalLayout {
             Notification.show("Enter the Birthday's date");
         }
 
-    }
-    public class Userimporter{
-        public static void main(String[] args) throws IOException, SQLException{
-            String jdbcURL = "jdbc:mysql://localhost:3306/mysql";
-            String username = "Luca";
-            String password = "!AcUl!eubagil!25";
+        String jdbcURL = "jdbc:mysql://localhost:3306/mysql";
+        String Username = "Luca";
+        String Password = "!AcUl!eubagil!25";
 
-            try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
-            }
-
-
-            String sql;
-            sql = "INSERT INTO personale(password,username,dateBirth,email,firstname,task,lastname)";
+        Connection connection = DriverManager.getConnection(jdbcURL, Username, Password);
+        try {
+        } finally {
+            connection.close();
         }
+
+
+        String sql;
+        sql = "INSERT INTO personale(password,username,dateBirth,email,firstname,task,lastname)";
+
     }
+
 
 }

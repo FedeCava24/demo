@@ -1,7 +1,11 @@
 package com.example.demo;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
@@ -11,6 +15,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;
@@ -34,7 +39,7 @@ public class AvailabilityPage extends AppLayout {
         H2 viewTitle = new H2("Availability");
         viewTitle.getStyle().set("font-size","var(--lumo-font-size-l)")
                 .set("margin","0");
-        Tabs subView = getSecondaryNavigation();
+        TabSheet subView = getSecondaryNavigation();
         HorizontalLayout wrapper = new HorizontalLayout(toggle,viewTitle);
         wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
         wrapper.setSpacing(false);
@@ -111,11 +116,38 @@ public class AvailabilityPage extends AppLayout {
         return new Tab(link);
     }
 
-    private Tabs getSecondaryNavigation(){
-        Tabs tabs =new Tabs();
-        tabs.add(new Tab("Wednesday"),new Tab("Friday"),new Tab("Saturday"));
-        return tabs;
+    private TabSheet getSecondaryNavigation(){
+        TabSheet tabs =new TabSheet();
+
+
+        tabs.add("Wednesday",new InsertAvailability());
+        tabs.add("Friday",new InsertAvailability());
+        tabs.add("Saturday",new InsertAvailability() );
+
+        return  tabs;
+    }
+
+    public class InsertAvailability extends Div {
+
+        public InsertAvailability(){
+
+        Button availabilityButton = new Button("Send Availability");
+            availabilityButton.addClickListener(e->insert());
+            availabilityButton.setVisible(true);
+
+            FormLayout formLayout=new FormLayout();
+            formLayout.add(availabilityButton);
+            formLayout.setResponsiveSteps( new FormLayout.ResponsiveStep("500px",1));
+            add(formLayout);
+        }
+        private void insert(){
+            System.out.println("ciao");
+
+        }
+
+
     }
 
 
 }
+

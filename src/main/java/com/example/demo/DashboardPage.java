@@ -1,21 +1,33 @@
 package com.example.demo;
 
+
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+
+import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.server.StreamResource;
+
+import java.io.InputStream;
 
 
 @Route("Dashboard")
@@ -35,7 +47,7 @@ public class DashboardPage extends AppLayout {
         viewTitle.getStyle().set("font-size","var(--lumo-font-size-l)")
                 .set("margin","0");
 
-        Tabs subViews = getSecondaryNavigation();
+        TabSheet subViews = getSecondaryNavigation();
 
         HorizontalLayout wrapper = new HorizontalLayout(toggle,viewTitle);
         wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -113,13 +125,42 @@ public class DashboardPage extends AppLayout {
         return new Tab(link);
     }
 
-    private Tabs getSecondaryNavigation(){
-        Tabs tabs =new Tabs();
-        tabs.add(new Tab("Next Event"));
+    private TabSheet getSecondaryNavigation(){
+        TabSheet tabs = new TabSheet();
+        tabs.add(("Next Event"),new nextEvent());
         return tabs;
     }
 
 
+    public class nextEvent extends Div {
+        public nextEvent(){
+            MemoryBuffer buffer = new MemoryBuffer();
+            Upload upload = new Upload(buffer);
+            upload.setAcceptedFileTypes("application/pdf", ".pdf");
 
+            upload.addFileRejectedListener(event -> {
+                String errorMessage = event.getErrorMessage();
+
+                Notification notification = Notification.show(errorMessage, 5000,
+                        Notification.Position.MIDDLE);
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            });
+            upload.addSucceededListener(event->{
+              //inserire la visualizzazione della stampa
+            });
+
+
+
+            H4 title = new H4("Upload report");
+            title.getStyle().set("margin-top", "0");
+            Paragraph hint = new Paragraph("Accepted file formats: PDF (.pdf)");
+            hint.getStyle().set("color", "var(--lumo-secondary-text-color)");
+
+            add(title, hint, upload);
+
+        }
+
+
+    }
 
 }

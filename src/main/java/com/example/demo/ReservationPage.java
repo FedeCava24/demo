@@ -5,6 +5,7 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -22,6 +23,10 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.StreamResource;
 
+
+
+import javax.swing.*;
+import java.util.List;
 
 
 @Route("Reservations")
@@ -148,11 +153,13 @@ public class ReservationPage extends AppLayout {
 
 
       public class InsertTable extends Div{
-          FormLayout stampaTN = new FormLayout();
-          FormLayout stampaTna = new FormLayout();
-          FormLayout stampaPN = new FormLayout();
-          FormLayout stampaNP = new FormLayout();
+
+
+
+
             public InsertTable(){
+
+
 
                 ComboBox<String> tableNumber = new ComboBox<>("Table Number");
                 TextField tableName =new TextField("Table Name");
@@ -182,19 +189,26 @@ public class ReservationPage extends AppLayout {
                         )
                 );
 
+                Grid<Table> grid=new Grid<>(Table.class,false);
+                grid.addColumn(Table::getTableNumber).setHeader("Table's Number");
+                grid.addColumn(Table::getTableName).setHeader("Table's Name");
+                grid.addColumn(Table::getPrName).setHeader("Pr's Name");
+                grid.addColumn(Table::getPersonNumber).setHeader("Number of Person");
+                grid.setHeight("500px");
+                grid.setWidth("2000px");
+                //bisogn aggiungere la stampa di tutte le persone
+
 
                 FormLayout stampa=new FormLayout();
-                stampa.add(stampaTN,stampaTna,stampaPN,stampaNP);
-                stampa.setResponsiveSteps(
-                        new FormLayout.ResponsiveStep("500px",4));
+
+                stampa.add(grid);
 
 
-                SplitLayout splitLayout=new SplitLayout(formLayout,stampa);
 
-                splitLayout.setHeight("1000px");
-                splitLayout.setWidth("1000px");
-                splitLayout.setOrientation(SplitLayout.Orientation.VERTICAL);
-                add(splitLayout);
+                VerticalLayout verticalLayout =new VerticalLayout(formLayout,stampa);
+
+
+                add(verticalLayout);
 
 
 
@@ -211,17 +225,16 @@ public class ReservationPage extends AppLayout {
               }else if (personNumber.isEmpty()){
                   Notification.show("Insert the Number of people");
               } else{
-                  stampaTN.add(tableNumber);
-                  stampaTna.add(tableName);
-                  stampaNP.add(personNumber);
-                  stampaPN.add(prName);
+                  Table Prenotazione[] = new Table[]{new Table(tableNumber, tableName, prName, personNumber)};
               }
 
 
           }
 
 
-      }
+            }
+
+
 
 
 }

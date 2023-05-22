@@ -14,7 +14,6 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -23,11 +22,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.StreamResource;
 
-
-
-import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Route("Reservations")
 public class ReservationPage extends AppLayout {
@@ -189,18 +185,21 @@ public class ReservationPage extends AppLayout {
                         )
                 );
 
-                Grid<Table> grid=new Grid<>(Table.class,false);
-                grid.addColumn(Table::getTableNumber).setHeader("Table's Number");
+                Grid<Table> grid=new Grid<>(Table.class,true);
+                /*grid.addColumn(Table::getTableNumber).setHeader("Table's Number");
                 grid.addColumn(Table::getTableName).setHeader("Table's Name");
                 grid.addColumn(Table::getPrName).setHeader("Pr's Name");
                 grid.addColumn(Table::getPersonNumber).setHeader("Number of Person");
                 grid.setHeight("500px");
-                grid.setWidth("2000px");
-                //bisogn aggiungere la stampa di tutte le persone
+                grid.setWidth("1000px");*/
+
+
+
 
 
                 FormLayout stampa=new FormLayout();
-
+                List<Table> tables= new ArrayList<>();//Da capie come riempire la lista con i vettori della pagina Table
+                grid.setItems(tables);
                 stampa.add(grid);
 
 
@@ -216,19 +215,18 @@ public class ReservationPage extends AppLayout {
 
 
           private void tableList(String tableNumber, String tableName, String prName, String personNumber) {
-              if(tableNumber.isEmpty()){
+              if(tableNumber.isBlank()){
                   Notification.show("Insert the Table Number");
               } else if (tableName.isEmpty()) {
                   Notification.show("Insert the Table Name");
               } else if (prName.isEmpty()) {
                   Notification.show("Intert the Pr's Name");
-              }else if (personNumber.isEmpty()){
+              }else if (personNumber.isBlank()){
                   Notification.show("Insert the Number of people");
               } else{
-                  Table Prenotazione[] = new Table[]{new Table(tableNumber, tableName, prName, personNumber)};
+                        Table table=  new Table(tableNumber,tableName,prName,personNumber);
+
               }
-
-
           }
 
 

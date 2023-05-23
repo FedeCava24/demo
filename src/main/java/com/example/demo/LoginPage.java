@@ -33,7 +33,7 @@ public class LoginPage extends Div {
             }
         });
 
-        new RouterLink("registration", RegistrationPage.class);
+        add(new RouterLink("registration", RegistrationPage.class));
     }
 
 }

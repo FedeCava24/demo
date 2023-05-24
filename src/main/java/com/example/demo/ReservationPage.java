@@ -123,8 +123,6 @@ public class ReservationPage extends AppLayout {
         TabSheet tabs =new TabSheet();
 
         tabs.add("Table's Map", new CaricatoreImmagine());
-        tabs.setHeight("800px");
-        tabs.setWidth("1100px");
         tabs.add("Wednesday",new InsertTable());
         tabs.add("Friday",new InsertTable());
         tabs.add("Saturday",new InsertTable());

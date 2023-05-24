@@ -127,15 +127,26 @@ public class DashboardPage extends AppLayout {
         public nextEvent(){
 
 
+            StreamResource imageResource1 = new StreamResource("Esseti_27maggio+.png",()->getClass().getResourceAsStream("/Esseti_27maggio.png"));
+            Image img1 = new Image(imageResource1,"Serata 27 maggio");
 
-        StreamResource imageResource = new StreamResource("Esseti_02giugno+.png",()->getClass().getResourceAsStream("/Esseti_02giugno.png"));
-        Image img = new Image(imageResource,"Serata 02 giugno");
-            StreamResource imageResource2 = new StreamResource("Esseti_27maggio+.png",()->getClass().getResourceAsStream("/Esseti_27maggio.png"));
-            Image img2 = new Image(imageResource2,"Serata 27 maggio");
-            HorizontalLayout horizontalLayout=new HorizontalLayout(img2,img);
-            horizontalLayout.setPadding(true);
-            horizontalLayout.setSpacing(true);
-            add(horizontalLayout);
+            StreamResource imageResource2 = new StreamResource("Esseti_02giugno+.png",()->getClass().getResourceAsStream("/Esseti_02giugno.png"));
+            Image img2 = new Image(imageResource2,"Serata 02 giugno");
+
+            StreamResource imageResource3 = new StreamResource("Esseti_03giugno+.png",()->getClass().getResourceAsStream("/Esseti_03giugno.png"));
+            Image img3 = new Image(imageResource3,"Serata 03 giugno");
+
+            StreamResource imageResource4 = new StreamResource("Esseti_07giugno+.png",()->getClass().getResourceAsStream("/Esseti_07giugno.png"));
+            Image img4 = new Image(imageResource4,"Serata 07 giugno");
+
+
+
+            VerticalLayout verticalLayout=new VerticalLayout(img1,img2,img3,img4);
+
+            verticalLayout.setPadding(true);
+            verticalLayout.setSpacing(true);
+            verticalLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+            add(verticalLayout);
 
         }
 

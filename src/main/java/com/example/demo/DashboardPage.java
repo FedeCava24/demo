@@ -3,31 +3,19 @@ package com.example.demo;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-
-import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.upload.Upload;
-import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
-
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.server.StreamResource;
-
-import java.io.InputStream;
 
 
 @Route("Dashboard")
@@ -128,35 +116,26 @@ public class DashboardPage extends AppLayout {
     private TabSheet getSecondaryNavigation(){
         TabSheet tabs = new TabSheet();
         tabs.add(("Next Event"),new nextEvent());
+        tabs.setHeight("900px");
+        tabs.setWidth("1200px");
         return tabs;
     }
 
 
     public class nextEvent extends Div {
+
         public nextEvent(){
-            MemoryBuffer buffer = new MemoryBuffer();
-            Upload upload = new Upload(buffer);
-            upload.setAcceptedFileTypes("application/pdf", ".pdf");
-
-            upload.addFileRejectedListener(event -> {
-                String errorMessage = event.getErrorMessage();
-
-                Notification notification = Notification.show(errorMessage, 5000,
-                        Notification.Position.MIDDLE);
-                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            });
-            upload.addSucceededListener(event->{
-              //inserire la visualizzazione della stampa
-            });
 
 
 
-            H4 title = new H4("Upload report");
-            title.getStyle().set("margin-top", "0");
-            Paragraph hint = new Paragraph("Accepted file formats: PDF (.pdf)");
-            hint.getStyle().set("color", "var(--lumo-secondary-text-color)");
-
-            add(title, hint, upload);
+        StreamResource imageResource = new StreamResource("Esseti_02giugno+.png",()->getClass().getResourceAsStream("/Esseti_02giugno.png"));
+        Image img = new Image(imageResource,"Serata 02 giugno");
+            StreamResource imageResource2 = new StreamResource("Esseti_27maggio+.png",()->getClass().getResourceAsStream("/Esseti_27maggio.png"));
+            Image img2 = new Image(imageResource2,"Serata 27 maggio");
+            HorizontalLayout horizontalLayout=new HorizontalLayout(img2,img);
+            horizontalLayout.setPadding(true);
+            horizontalLayout.setSpacing(true);
+            add(horizontalLayout);
 
         }
 

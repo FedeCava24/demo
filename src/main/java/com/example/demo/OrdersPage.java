@@ -17,6 +17,8 @@ import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
+import javax.swing.*;
+
 
 @Route("Orders")
 public class OrdersPage extends AppLayout {
@@ -113,10 +115,11 @@ public class OrdersPage extends AppLayout {
 
     private TabSheet getSecondaryNavigation(){
         TabSheet tabs =new TabSheet();
+        JPanel order =new JPanel()
         tabs.add("New order Saturday", new newOrderSaturday());
         tabs.add("New order Friday", new newOrderFriday());
-        tabs.add("Open",new openOrder());
-        tabs.add("Completed",new completedOrder());
+        tabs.add("Open",new openOrder(order));
+        tabs.add("Completed",new completedOrder(order));
         tabs.setHeight("720px");
         tabs.setWidth("1180px");
         return tabs;
@@ -723,21 +726,27 @@ public class OrdersPage extends AppLayout {
 
             Button sendOrderFriday=new Button("Send Order");
             addFormItem(sendOrderFriday,"");
+
+            sendOrderFriday.addClickListener(e-> new createOrder(proseccoField.getValue(),bellavistaField.getValue(),moetField.getValue(),moeticeField.getValue(),moeticeRField.getValue(),domField.getValue(),domroseField.getValue(),domluminouseField.getValue(),domMagnumField.getValue(),cristalField.getValue(),krugField.getValue(),armandField.getValue(),armandroseField.getValue(),armandverdeField.getValue(),armandmagnumField.getValue(),bombayField.getValue(),bombaymagnumField.getValue(),havanaField.getValue(),belowField.getValue(),greyField.getValue(),greyMagnumField.getValue(),greyJereboamField.getValue(),greyMathusalemField.getValue(),belvederemagnumField.getValue(),hendricksFiles.getValue(),mareField.getValue(),malfiPField.getValue(),malfiLField.getValue(),malfiAField.getValue()));
+
+
         }
 
 
     }
 
-    public class openOrder extends Div{
-        public openOrder(){
+    public static class openOrder extends JFrame{
+        public openOrder(JPanel order){
+            add(order);
 
         }
     }
 
-    public class completedOrder extends Div{
-        public completedOrder(){
+    public static class completedOrder extends JFrame{
+        public completedOrder(JPanel completed){
+
+            add(completed);
 
         }
     }
-
 }

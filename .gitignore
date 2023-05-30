@@ -36,3 +36,7 @@ out/
 
 ### VS Code ###
 .vscode/
+frontend/generated/jar-resources/data-generator-types.ts
+frontend/generated/jar-resources/data-generator.ts
+frontend/generated/jar-resources/example-data-bundle.js
+frontend/generated/jar-resources/flow-component-directive.js

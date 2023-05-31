@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -18,9 +19,6 @@ import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
-import javax.swing.*;
-
-
 @Route("Orders")
 public class OrdersPage extends AppLayout {
     Integer []Prezzo={50,120,170,200,230,450,500,600,950,550,450,600,900,700,1300,170,400,170,170,220,450,950,1900,550,220,220,200,200,200};
@@ -34,8 +32,7 @@ public class OrdersPage extends AppLayout {
     String[][] arrayNome= new String[150][29];
     Integer[][] arrayQuantita=new Integer[150][29];
     String[][] arrayNumTavolo= new String[150][1];
-    private JFrame frame ;
-    private JPanel mainpanel;
+
     public OrdersPage(){
 
 
@@ -53,6 +50,8 @@ public class OrdersPage extends AppLayout {
         HorizontalLayout wrapper = new HorizontalLayout(toggle,viewTitle);
         wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
         wrapper.setSpacing(false);
+
+
 
         VerticalLayout viewHeader=new VerticalLayout(wrapper, subViews);
         viewHeader.setPadding(false);
@@ -130,8 +129,12 @@ public class OrdersPage extends AppLayout {
 
     private TabSheet getSecondaryNavigation(){
         TabSheet tabs =new TabSheet();
-        tabs.add("New order Friday", new newOrderFriday());
+        tabs.add("New order", new newOrder());
         tabs.add("Open",new openOrder());
+
+
+
+
        /* tabs.add("Completed",new completedOrder());*/
         tabs.setHeight("720px");
         tabs.setWidth("1180px");
@@ -139,9 +142,10 @@ public class OrdersPage extends AppLayout {
     }
 
 
-    public class newOrderFriday extends FormLayout {
 
-        public newOrderFriday(){
+    public class newOrder extends FormLayout {
+
+        public newOrder(){
             setResponsiveSteps(new FormLayout.ResponsiveStep("0", 2, FormLayout.ResponsiveStep.LabelsPosition.ASIDE));
 
             IntegerField proseccoField = new IntegerField();
@@ -486,11 +490,8 @@ public class OrdersPage extends AppLayout {
 
     public  class openOrder extends Div {
         public openOrder() {
-          /*  frame = new JFrame("Pannelli ordine");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            mainpanel = new JPanel();
-            mainpanel.setLayout(new BoxLayout(mainpanel, BoxLayout.Y_AXIS));
+          /*  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+           mainpanel = new JPanel();
             for(int i=0;i<=150;i++){
                 if(arrayNumTavolo[i][0]!=null){
                     JPanel orderPanel=new JPanel();
@@ -503,7 +504,6 @@ public class OrdersPage extends AppLayout {
                             JLabel txt=new JLabel(arrayNome[i][j]);
                             totale+=arrayQuantita[i][j]*arrayPrezzo[i][j];
                             orderPanel.add(txt,arrayQuantita[i][j]);
-
                         }
                     }
                     JTextField bill=new JTextField(totale);
@@ -511,18 +511,38 @@ public class OrdersPage extends AppLayout {
                     orderPanel.add("Totale Ordine",bill);
                     mainpanel.add(orderPanel);
                 }
-
             }
-
-
-
-
             JScrollPane scrollPane = new JScrollPane(mainpanel);
             frame.getContentPane().add(scrollPane);
 
             frame.pack();
-            frame.setVisible(true);
-*/
+            frame.setVisible(true);*/
+
+
+
+
+          Accordion accordion =new Accordion();
+            for (int i=0;i<=150;i++){
+                VerticalLayout verticalLayout = new VerticalLayout();
+                if(arrayNumTavolo[i][0]!=null){
+                    for(int j=0;j<=28;j++){
+
+                        if(arrayQuantita[i][j]!=null){
+                            Label quantitaLable=new Label(String.valueOf(arrayQuantita[i][j]));
+                            Span quantita=new Span(quantitaLable);
+                            Span nome=new Span(arrayNome[i][j]);
+                           HorizontalLayout horizontalLayout= new HorizontalLayout(nome,quantita);
+                           horizontalLayout.setSpacing(true);
+                           verticalLayout.add(horizontalLayout);
+                        }
+                    }
+                    verticalLayout.setPadding(false);
+                    verticalLayout.setSpacing(false);
+                    accordion.add(arrayNumTavolo[i][0],verticalLayout);
+                }
+
+            }
+
 
             //prove di stampa ordini riuscite correttamente
             Button print = new Button("stampa");
@@ -538,9 +558,14 @@ public class OrdersPage extends AppLayout {
                     }
                     System.out.println("Totale Ordine: "+ totale+"€");
                 }
+                ;
             });
+            print.addClickListener(e-> new openOrder());
+            VerticalLayout verticalLayout = new VerticalLayout(print,accordion);
+            add(verticalLayout);
 
-            add(print);
+
+
         }
     }
     public  class setOrder  {

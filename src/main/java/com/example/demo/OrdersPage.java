@@ -32,6 +32,7 @@ public class OrdersPage extends AppLayout {
     String[][] arrayNome= new String[150][29];
     Integer[][] arrayQuantita=new Integer[150][29];
     String[][] arrayNumTavolo= new String[150][1];
+    TabSheet tabs =new TabSheet();
 
     public OrdersPage(){
 
@@ -128,10 +129,9 @@ public class OrdersPage extends AppLayout {
 
 
     private TabSheet getSecondaryNavigation(){
-        TabSheet tabs =new TabSheet();
+
         tabs.add("New order", new newOrder());
         tabs.add("Open",new openOrder());
-
 
 
 
@@ -482,6 +482,10 @@ public class OrdersPage extends AppLayout {
                 malfiLField.setValue(0);
                 malfiAField.setValue(0);
             });
+            sendOrder.addClickListener(e->{
+                tabs.remove(1);
+                tabs.add("Open",new openOrder());
+            });
 
         }
 
@@ -490,61 +494,77 @@ public class OrdersPage extends AppLayout {
 
     public  class openOrder extends Div {
         public openOrder() {
-          /*  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-           mainpanel = new JPanel();
-            for(int i=0;i<=150;i++){
+          Accordion accordion =new Accordion();
+            for (int i=0;i<150;i++){
+
+
                 if(arrayNumTavolo[i][0]!=null){
-                    JPanel orderPanel=new JPanel();
-                    orderPanel.setLayout(new BoxLayout(orderPanel,BoxLayout.Y_AXIS));
-                    JLabel titleLabel=new JLabel(arrayNumTavolo[i][0]);
-                    orderPanel.add(titleLabel, BorderLayout.NORTH);
+                    VerticalLayout verticalLayout = new VerticalLayout();
                     Integer totale=0;
                     for(int j=0;j<=28;j++){
-                        if(arrayQuantita[i][j]!=null){
-                            JLabel txt=new JLabel(arrayNome[i][j]);
-                            totale+=arrayQuantita[i][j]*arrayPrezzo[i][j];
-                            orderPanel.add(txt,arrayQuantita[i][j]);
-                        }
-                    }
-                    JTextField bill=new JTextField(totale);
-                    bill.setEditable(false);
-                    orderPanel.add("Totale Ordine",bill);
-                    mainpanel.add(orderPanel);
-                }
-            }
-            JScrollPane scrollPane = new JScrollPane(mainpanel);
-            frame.getContentPane().add(scrollPane);
 
-            frame.pack();
-            frame.setVisible(true);*/
-
-
-
-
-          Accordion accordion =new Accordion();
-            for (int i=0;i<=150;i++){
-                VerticalLayout verticalLayout = new VerticalLayout();
-                if(arrayNumTavolo[i][0]!=null){
-                    for(int j=0;j<=28;j++){
 
                         if(arrayQuantita[i][j]!=null){
                             Label quantitaLable=new Label(String.valueOf(arrayQuantita[i][j]));
                             Span quantita=new Span(quantitaLable);
                             Span nome=new Span(arrayNome[i][j]);
+                            totale+=arrayPrezzo[i][j]*arrayQuantita[i][j];
                            HorizontalLayout horizontalLayout= new HorizontalLayout(nome,quantita);
                            horizontalLayout.setSpacing(true);
                            verticalLayout.add(horizontalLayout);
                         }
                     }
+                    if(totale==0){
+                        continue;
+                    }
+                    verticalLayout.add("Totale Ordine: "+totale+"€");
+
+                    Button completed=new Button("In corso: "+arrayNumTavolo[i][0]);
+                    completed.setHeight("40px");
+                    completed.setWidth("200px");
+
+                    verticalLayout.add(completed);
+
                     verticalLayout.setPadding(false);
                     verticalLayout.setSpacing(false);
+
                     accordion.add(arrayNumTavolo[i][0],verticalLayout);
+                    completed.addClickListener(e->{
+                        for (int j=0;j<=150;j++) {
+                            if (completed.getText().contains(arrayNumTavolo[j][0])) {
+                                accordion.remove(verticalLayout);
+                                arrayNumTavolo[j][0]=null;
+
+                                for (int k=0;k<=28;k++){
+                                    arrayQuantita[j][k]=null;
+                                    arrayPrezzo[j][k]=null;
+                                    arrayNome[j][k]=null;
+                                }
+                                for (int m=j+1;m<150;m++) {
+                                    if(arrayNumTavolo[m][0]!=null){
+                                        arrayNumTavolo[m-1][0]=arrayNumTavolo[m][0];
+                                        arrayNumTavolo[m][0]=null;
+                                        for (int k=0;k<=28;k++){
+                                            arrayQuantita[m-1][k]=arrayQuantita[m][k];
+                                            arrayPrezzo[m-1][k]=arrayPrezzo[m][k];
+                                            arrayNome[m-1][k]=arrayNome[m][k];
+                                            arrayQuantita[m][k]=null;
+                                            arrayPrezzo[m][k]=null;
+                                            arrayNome[m][k]=null;
+                                        }
+                                    }
+                                }
+                                tabs.remove(1);
+                                tabs.add("Open", new openOrder());
+                            }
+                        }
+                    });
                 }
 
             }
 
 
-            //prove di stampa ordini riuscite correttamente
+            /*//prove di stampa ordini riuscite correttamente
             Button print = new Button("stampa");
             print.addClickListener(e -> {
                 for (int i = 0; i < 5; i++) {
@@ -559,9 +579,9 @@ public class OrdersPage extends AppLayout {
                     System.out.println("Totale Ordine: "+ totale+"€");
                 }
                 ;
-            });
-            print.addClickListener(e-> new openOrder());
-            VerticalLayout verticalLayout = new VerticalLayout(print,accordion);
+            });*/
+
+            VerticalLayout verticalLayout = new VerticalLayout(accordion);
             add(verticalLayout);
 
 
@@ -605,7 +625,7 @@ public class OrdersPage extends AppLayout {
 
 
         public void createOrder (String[] newNome, Integer[]newQuantita,Integer[] newPrezzo,String newNumTavolo){
-            for (int i=0;i<=150;i++){
+            for (int i=0;i<150;i++){
                 if(arrayNumTavolo[i][0]==null){
                     arrayNumTavolo[i][0]=newNumTavolo;
                     for (int j=0;j<=28;j++){

@@ -2,8 +2,8 @@ package com.example.demo;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
@@ -11,12 +11,10 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabSheet;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
@@ -198,12 +196,12 @@ public class ProductPage extends AppLayout{
                 blucField.setMax(999);
                 addFormItem(blucField, "Blu Curacao");
 
-                IntegerField malibùField = new IntegerField();
-                malibùField.setValue(0);
-                malibùField.setStepButtonsVisible(true);
-                malibùField.setMin(0);
-                malibùField.setMax(999);
-                addFormItem(malibùField, "Malibu");
+                IntegerField malibuField = new IntegerField();
+                malibuField.setValue(0);
+                malibuField.setStepButtonsVisible(true);
+                malibuField.setMin(0);
+                malibuField.setMax(999);
+                addFormItem(malibuField, "Malibu");
 
                 IntegerField monteField = new IntegerField();
                 monteField.setValue(0);
